@@ -13,7 +13,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(device)
 
 num_epochs = 10
-batch_size = 4
+batch_size = 1
 learning_rate = 0.001
 
 
@@ -38,8 +38,8 @@ print(f'Size of entire dataset : {len(image_dataset)}')
 print(f'Size of train dataset : {len(train_dataset)}')
 print(f'Size of train dataset : {len(test_dataset)}')
 
-train_loader = DataLoader(train_dataset, batch_size = 2, shuffle = True)
-test_loader = DataLoader(test_dataset, batch_size = 2, shuffle = False)
+train_loader = DataLoader(train_dataset, batch_size = 1, shuffle = True)
+test_loader = DataLoader(test_dataset, batch_size = 1, shuffle = False)
 
 
 def imshow(img):
@@ -54,59 +54,26 @@ images, labels = dataiter.next()
 imshow(torchvision.utils.make_grid(images))
 print(images.shape)
 
-# conv1 = nn.Conv2d(3,6,4)
-# pool = nn.MaxPool2d(3,3)
-# conv2 = nn.Conv2d(6,16,4)
-# pool = nn.MaxPool2d(3,3)
-# conv3 = nn.Conv2d(16,26,4)
-# pool = nn.MaxPool2d(3,3)
-# conv4 = nn.Conv2d(26,36,4)
-# print(images.shape)
-# x = conv1(images)
-# print(x.shape)
-# x = pool(x)
-# print(x.shape)
-# x = conv2(x)
-# print(x.shape)
-# x = pool(x)
-# print(x.shape)
-# x = conv3(x)
-# print(x.shape)
-# x = pool(x)
-# print(x.shape)
-# x = conv4(x)
-# print(x.shape)
-# x = pool(x)
-# print(x.shape)
 
 
 class ConvNet(nn.Module):
     def __init__(self):
         super(ConvNet, self).__init__()
         self.conv1 = nn.Conv2d(3,6,5)
-        self.pool = nn.MaxPool2d(3,3)
+        self.pool = nn.MaxPool2d(2,2)
         self.conv2 = nn.Conv2d(6,16,5)
-        self.conv3 = nn.Conv3d(16,26,5)
-        self.conv4 = nn.Conv2d(26,36,5)
-        self.fc1 = nn.Linear(36*10*10, 1000)
-        self.fc2 = nn.Linear(1000,500)
-        self.fc3 = nn.Linear(500, 250)
-        self.fc4 = nn.Linear(250,120)
-        self.fc5 = nn.Linear(120, 84)
-        self.fc6 = nn.Linear(84, 2)
+        self.fc1 = nn.Linear(976144, 120)
+        self.fc2 = nn.Linear(120, 84)
+        self.fc3 = nn.Linear(84, 2)
         
     def forward(self,x):
-        x = self.pool(F.relu(self.conv1(x)))
-        x = self.pool(F.relu(self.conv2(x)))
-        x = self.pool(F.relu(self.conv3(x)))
-        x = self.pool(F.relu(self.conv4(x)))
-        x = x.view(-1, 36*10*10)
+        # -> n, 3, 32, 32 (CIFAR10 - 32*32)
+        x = self.pool(F.relu(self.conv1(x))) # -> n, 6, 14, 14
+        x = self.pool(F.relu(self.conv2(x))) # -> n, 16, 5, 5
+        x = x.view(-1, 976144) # -> n, 400
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
-        x = F.relu(self.fc3(x))
-        x = F.relu(self.fc4(x))
-        x = F.relu(self.fc5(x))
-        x = self.fc6(x)
+        x = self.fc3(x)
         return x
 
 model = ConvNet().to(device)
@@ -116,7 +83,12 @@ optimizer = torch.optim.SGD(model.parameters(), lr = learning_rate)
 
 n_total_steps = len(train_loader)
 
-for epoch in range(num_epochs):
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+
+loss_list = []
+# training phase
+for epoch in range(1):
     for i, (images, labels) in enumerate(train_loader):
         images = images.to(device)
         labels = labels.to(device)
@@ -128,8 +100,56 @@ for epoch in range(num_epochs):
         loss.backward()
         optimizer.step()
         
-        if (i+1) % 10000 == 0:
+        loss_list.append(loss.item())
+        
+        if (i+1) %500 == 0:
             print (f'Epoch [{epoch+1}/{num_epochs}], Step [{i+1}/{n_total_steps}], Loss: {loss.item():.4f}')
             
-            
 print("Training done")
+
+plt.plot(loss_list, color = 'r')
+plt.figure(figsize=(10,5))
+plt.xlabel('Training size')
+plt.ylabel('Loss')
+plt.title('Loss of the network, epoch = 1')
+plt.show()
+
+
+acc_list = []
+accuracy = 0.0
+
+# test phase
+with torch.no_grad():
+    n_correct = 0
+    n_samples = 0
+    n_class_correct = [0 for i in range(2)]
+    n_class_samples = [0 for i in range(2)]
+    for images, labels in test_loader:
+        images = images.to(device)
+        labels = labels.to(device)
+        outputs = model(images)
+
+        _, predicted = torch.max(outputs, 1)
+        n_samples += labels.size(0)
+        n_correct += (predicted == labels).sum().item()
+
+        for i in range(batch_size):
+            label = labels[i]
+            pred = predicted[i]
+            if (label == pred):
+                n_class_correct[label] += 1
+            n_class_samples[label] += 1
+        
+        acc_list.append(n_correct/n_samples)
+    
+    accuracy = 100.0 * n_correct / n_samples
+    print(f'Accuracy of the network : {accuracy} %')
+
+
+plt.plot(acc_list)
+plt.figure(figsize=(10,5))
+plt.xlabel('Test size')
+plt.ylabel('Accuracy')
+plt.title('Accuracy of the network, epoch = 1')
+plt.legend
+plt.show()
