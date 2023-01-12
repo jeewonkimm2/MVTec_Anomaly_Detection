@@ -1,0 +1,70 @@
+Train Epoch: 10 [0(0%)]	Train Loss : 0.823477
+Train Epoch: 10 [2000(31%)]	Train Loss : 0.613885
+Train Epoch: 10 [4000(61%)]	Train Loss : 0.708207
+Train Epoch: 10 [6000(92%)]	Train Loss : 0.688487
+
+[EPOCH: 1], 	Test Loss: 0.6861, 	Test Accuracy: 58.5723 %
+
+Train Epoch: 10 [0(0%)]	Train Loss : 0.639869
+Train Epoch: 10 [2000(31%)]	Train Loss : 0.758138
+Train Epoch: 10 [4000(61%)]	Train Loss : 0.730299
+Train Epoch: 10 [6000(92%)]	Train Loss : 0.473479
+
+[EPOCH: 2], 	Test Loss: 0.6345, 	Test Accuracy: 62.1721 %
+
+Train Epoch: 10 [0(0%)]	Train Loss : 0.740081
+Train Epoch: 10 [2000(31%)]	Train Loss : 0.249545
+Train Epoch: 10 [4000(61%)]	Train Loss : 0.564287
+Train Epoch: 10 [6000(92%)]	Train Loss : 0.466745
+
+[EPOCH: 3], 	Test Loss: 0.5491, 	Test Accuracy: 71.0189 %
+
+Train Epoch: 10 [0(0%)]	Train Loss : 0.149590
+Train Epoch: 10 [2000(31%)]	Train Loss : 0.433417
+Train Epoch: 10 [4000(61%)]	Train Loss : 0.708360
+Train Epoch: 10 [6000(92%)]	Train Loss : 0.614530
+
+[EPOCH: 4], 	Test Loss: 0.5093, 	Test Accuracy: 71.8121 %
+
+Train Epoch: 10 [0(0%)]	Train Loss : 0.388643
+Train Epoch: 10 [2000(31%)]	Train Loss : 0.694391
+Train Epoch: 10 [4000(61%)]	Train Loss : 0.547832
+Train Epoch: 10 [6000(92%)]	Train Loss : 0.673007
+
+[EPOCH: 5], 	Test Loss: 0.4921, 	Test Accuracy: 74.5577 %
+
+Train Epoch: 10 [0(0%)]	Train Loss : 0.665740
+Train Epoch: 10 [2000(31%)]	Train Loss : 3.764497
+Train Epoch: 10 [4000(61%)]	Train Loss : 1.013587
+Train Epoch: 10 [6000(92%)]	Train Loss : 0.661367
+
+[EPOCH: 6], 	Test Loss: 0.4572, 	Test Accuracy: 77.4253 %
+
+Train Epoch: 10 [0(0%)]	Train Loss : 0.226250
+Train Epoch: 10 [2000(31%)]	Train Loss : 0.161061
+Train Epoch: 10 [4000(61%)]	Train Loss : 0.231268
+Train Epoch: 10 [6000(92%)]	Train Loss : 0.460516
+
+[EPOCH: 7], 	Test Loss: 0.4292, 	Test Accuracy: 80.0488 %
+
+Train Epoch: 10 [0(0%)]	Train Loss : 0.593747
+Train Epoch: 10 [2000(31%)]	Train Loss : 0.705722
+Train Epoch: 10 [4000(61%)]	Train Loss : 0.290059
+Train Epoch: 10 [6000(92%)]	Train Loss : 0.373090
+
+[EPOCH: 8], 	Test Loss: 0.4316, 	Test Accuracy: 78.4015 %
+
+Train Epoch: 10 [0(0%)]	Train Loss : 0.727645
+Train Epoch: 10 [2000(31%)]	Train Loss : 0.317176
+Train Epoch: 10 [4000(61%)]	Train Loss : 0.283523
+Train Epoch: 10 [6000(92%)]	Train Loss : 0.414037
+
+[EPOCH: 9], 	Test Loss: 0.4486, 	Test Accuracy: 78.0354 %
+
+Train Epoch: 10 [0(0%)]	Train Loss : 0.445269
+Train Epoch: 10 [2000(31%)]	Train Loss : 0.814735
+Train Epoch: 10 [4000(61%)]	Train Loss : 0.064271
+Train Epoch: 10 [6000(92%)]	Train Loss : 0.559578
+
+[EPOCH: 10], 	Test Loss: 0.4028, 	Test Accuracy: 82.0622 %
+
